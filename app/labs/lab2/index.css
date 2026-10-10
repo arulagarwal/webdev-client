@@ -1,0 +1,76 @@
+#wd-lab2 h3 {
+  background-color: cyan;
+  color: red;
+}
+
+#wd-lab2 h2 {
+  background-color: navy;
+  color: white;
+}
+
+p#wd-id-selector-1 {
+  background-color: red;
+  color: white;
+}
+p#wd-id-selector-2 {
+  background-color: yellow;
+  color: black;
+}
+p#wd-id-selector-3 {
+  background-color: #463F1A;
+  color: #F9EBE0;
+}
+p#wd-ai-id-selector {
+  background-color: teal;
+  color: white;
+}
+
+.wd-class-selector {
+  background-color: yellow;
+  color: blue;
+}
+.wd-my-style-class {
+  background-color: #c1121f;
+  color: #003049;
+}
+.wd-ai-class-selector {
+  background-color: lavender;
+  color: indigo;
+}
+.wd-selector-1 .wd-selector-3 {
+  background-color: red;
+  color: white;
+}
+.wd-selector-2 > .wd-selector-3 > .wd-selector-4 {
+  background-color: yellow;
+  color: blue;
+}
+.wd-selector-2 .wd-my-span {
+  background-color: #14213d;
+  color: #e5e5e5;
+}
+.wd-selector-1 .wd-ai-selector-5 {
+  background-color: black;
+  color: lime;
+}
+#wd-lab2 h5 {
+  background-color: #e5e5e5;
+  color: #14213d;
+}
+#wd-lab2 .wd-my-cascade-class {
+  background-color: #fca311;
+  color: #14213d;
+}
+#wd-lab2 #wd-my-cascade {
+  background-color: #14213d;
+  color: #fca311;
+}
+#wd-css-ai-cascade p {
+  background-color: green;
+}
+#wd-css-ai-cascade .wd-ai-cascade {
+  background-color: yellow;
+}
+#wd-css-ai-cascade #wd-ai-cascade {
+  background-color: red;
+}
