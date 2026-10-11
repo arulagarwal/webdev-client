@@ -21,3 +21,9 @@
 #wd-kambaz * {
   box-sizing: border-box;
 }
+
+@media (min-width: 768px) {
+  .wd-main-content-offset {
+    margin-left: 120px;
+  }
+}
