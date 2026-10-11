@@ -7,7 +7,7 @@ export default function ForegroundColors() {
         The text in this paragraph is red but{" "}
         <span className="wd-fg-color-green">this text is green</span>
       </p>
-      <p className="wd-my-fg-color wd-my-bg-color">
+      <p className="wd-fg-color-olive wd-my-bg-color">
         All that is gold does not glitter,{" "}
         <span className="wd-fg-color-black">
           not all those who wander are lost.

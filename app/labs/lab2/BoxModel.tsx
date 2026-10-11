@@ -22,7 +22,8 @@ export default function BoxModel() {
           border-box: width 200px includes padding and border
         </div>
         <div id="wd-ai-box-sizing" className="wd-box-sizing-border">
-          border-box keeps the declared 200px width
+          {/* border-box keeps the declared 200px width */}
+          border-box: same 200px width, padding, and border
         </div>
       </div>
     </div>
