@@ -34,5 +34,29 @@
     "description": "This course covers the principles of spacecraft design, including structures, propulsion, thermal control, and power systems. Students apply systems engineering methods to mission design, orbital mechanics, and payload integration for current and future space missions.",
     "image": "/images/mongodb.jpg",
     "term": "Spring 2023"
+  },
+  {
+    "_id": "CS5610",
+    "name": "CS5610 Web Development",
+    "number": "CS5610",
+    "startDate": "2026-09-14",
+    "endDate": "2026-12-20",
+    "department": "D134",
+    "credits": 4,
+    "description": "One stack to rule them all: React, Next.js, Node, and MongoDB",
+    "image": "/images/reactjs.jpg",
+    "term": "Fall 2026"
+  },
+  {
+    "_id": "RS104",
+    "name": "Organic Chemistry",
+    "number": "RS4580",
+    "startDate": "2023-01-10",
+    "endDate": "2023-05-15",
+    "department": "D123",
+    "credits": 4,
+    "description": "An introduction to the structure, properties, and reactions of carbon compounds, with the propellant chemistry that powers modern rocket engines.",
+    "image": "/images/reactjs.jpg",
+    "term": "Spring 2023"
   }
 ]
