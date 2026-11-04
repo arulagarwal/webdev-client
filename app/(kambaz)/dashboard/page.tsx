@@ -106,7 +106,7 @@ export default function Dashboard() {
         id="wd-course-number"
       />
       <hr />
-      <h2 id="wd-dashboard-published">Published Courses ({visibleCourses.length})</h2>
+      <h2 id="wd-dashboard-published">Published Courses ({courses.length})</h2>
       <hr />
       <div
         id="wd-dashboard-courses"
