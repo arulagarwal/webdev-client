@@ -5,6 +5,12 @@ import PassingDataOnEvent from "./PassingDataOnEvent";
 import PassingFunctions from "./PassingFunctions";
 import CounterBroken from "./CounterBroken";
 import Counter from "./Counter";
+import BooleanStateVariables from "./BooleanStateVariables";
+import StringStateVariables from "./StringStateVariables";
+import DateStateVariable from "./DateStateVariable";
+import ObjectStateVariable from "./ObjectStateVariable";
+import ArrayStateVariable from "./ArrayStateVariable";
+import ProfileForm from "./profile/ProfileForm";
 import "@/app/labs/lab2/tailwind/utilities.css";
 
 export default function Lab4() {
@@ -26,6 +32,12 @@ export default function Lab4() {
       />
       <CounterBroken />
       <Counter />
+      <BooleanStateVariables />
+      <StringStateVariables />
+      <DateStateVariable />
+      <ObjectStateVariable />
+      <ArrayStateVariable />
+      <ProfileForm />
     </div>
   );
 }
