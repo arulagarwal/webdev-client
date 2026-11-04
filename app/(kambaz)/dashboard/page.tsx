@@ -7,7 +7,7 @@ import {
   useCoursesStore,
   type Course,
 } from "../store/coursesStore";
-import * as db from "../database";
+import { useEnrollmentsStore } from "../store/enrollmentsStore";
 import { useAccountContext } from "../account/AccountContext";
 
 export default function Dashboard() {
@@ -16,9 +16,11 @@ export default function Dashboard() {
   const updateCourse = useCoursesStore((state) => state.updateCourse);
   const [course, setCourse] = useState<Course>(emptyCourse);
   const { currentUser } = useAccountContext();
-  const visibleCourses = currentUser
+  const enrollments = useEnrollmentsStore((state) => state.enrollments);
+  const [showAllCourses, setShowAllCourses] = useState(false);
+  const visibleCourses = currentUser && !showAllCourses
     ? courses.filter((c) =>
-        db.enrollments.some(
+        enrollments.some(
           (enrollment) =>
             enrollment.user === currentUser._id && enrollment.course === c._id,
         ),
@@ -27,7 +29,27 @@ export default function Dashboard() {
 
   return (
     <div id="wd-dashboard">
-      <h1 id="wd-dashboard-title">Dashboard</h1>
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <h1 id="wd-dashboard-title">Dashboard</h1>
+        <div className="flex gap-2">
+          <button
+            type="button"
+            className="rounded bg-blue-600 px-3 py-1.5 text-sm font-medium text-white"
+            id="wd-my-enrollments-toggle"
+            onClick={() => setShowAllCourses(!showAllCourses)}
+          >
+            Enrollments
+          </button>
+          <button
+            type="button"
+            className="rounded bg-gray-600 px-3 py-1.5 text-sm font-medium text-white"
+            id="wd-enrollments-toggle"
+            onClick={() => setShowAllCourses(!showAllCourses)}
+          >
+            Sample Enrollments
+          </button>
+        </div>
+      </div>
       <hr />
       <h5 className="flex flex-wrap items-center gap-2">
         New Course
