@@ -18,6 +18,8 @@ import ContextExamples from "./context/ContextExamples";
 import ContextProfileForm from "./context/ContextProfileForm";
 import ZustandExamples from "./zustand/ZustandExamples";
 import ZustandProfileForm from "./zustand/ZustandProfileForm";
+import ReduxExamples from "./redux/ReduxExamples";
+import Effect from "./Effect";
 import "@/app/labs/lab2/tailwind/utilities.css";
 
 export default function Lab4() {
@@ -52,6 +54,8 @@ export default function Lab4() {
       <ContextProfileForm />
       <ZustandExamples />
       <ZustandProfileForm />
+      <ReduxExamples />
+      <Effect />
     </div>
   );
 }
