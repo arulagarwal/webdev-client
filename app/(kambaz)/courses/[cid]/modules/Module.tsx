@@ -2,7 +2,15 @@ import Lesson from "./Lesson";
 import ModuleControlButtons from "./ModuleControlButtons";
 import { useModulesStore, type CourseModule } from "../../../store/modulesStore";
 
-export default function Module({ module }: { module: CourseModule }) {
+export default function Module({
+  module,
+  onRemoveModule,
+  onUpdateModule,
+}: {
+  module: CourseModule;
+  onRemoveModule: (moduleId: string) => void;
+  onUpdateModule: (module: CourseModule) => void;
+}) {
   const updateModule = useModulesStore((state) => state.updateModule);
   return (
     <li className="wd-module mb-5 overflow-hidden border border-neutral-400 p-0 text-xl">
@@ -14,14 +22,17 @@ export default function Module({ module }: { module: CourseModule }) {
             onChange={(e) => updateModule({ ...module, name: e.target.value })}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                updateModule({ ...module, editing: false });
+                onUpdateModule({ ...module, editing: false });
               }
             }}
           />
         ) : (
           <span>{module.name}</span>
         )}
-        <ModuleControlButtons moduleId={module._id} />
+        <ModuleControlButtons
+          moduleId={module._id}
+          deleteModule={onRemoveModule}
+        />
       </div>
       <ul className="wd-lessons m-0 list-none p-0">
         {module.lessons?.map((lesson) => (
