@@ -7,7 +7,10 @@ import CourseNavigation from "./Navigation";
 import Breadcrumb from "./Breadcrumb";
 import * as client from "../client";
 import { useCoursesStore } from "../../store/coursesStore";
-import { useEnrollmentsStore } from "../../store/enrollmentsStore";
+import {
+  useEnrollmentsStore,
+  type Enrollment,
+} from "../../store/enrollmentsStore";
 import { useAccountContext } from "../../account/AccountContext";
 
 export default function CoursesLayout({
@@ -30,6 +33,7 @@ export default function CoursesLayout({
   const [showCourseNav, setShowCourseNav] = useState(true);
   const { currentUser } = useAccountContext();
   const enrollments = useEnrollmentsStore((state) => state.enrollments);
+  const setEnrollments = useEnrollmentsStore((state) => state.setEnrollments);
   const router = useRouter();
   const allowed =
     !currentUser ||
@@ -37,8 +41,16 @@ export default function CoursesLayout({
       (e) => e.user === currentUser._id && e.course === courseId,
     );
   useEffect(() => {
-    if (!allowed) router.push("/dashboard");
-  }, [allowed, router]);
+    if (!currentUser) return;
+    const check = async () => {
+      const mine: Enrollment[] = await client.findMyEnrollments();
+      setEnrollments(mine);
+      if (!mine.some((e) => e.course === courseId)) {
+        router.push("/dashboard");
+      }
+    };
+    check();
+  }, [currentUser, courseId, setEnrollments, router]);
   if (!allowed) return null;
 
   return (

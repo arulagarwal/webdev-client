@@ -8,6 +8,7 @@ import {
   useCoursesStore,
   type Course,
 } from "../store/coursesStore";
+import { useEnrollmentsStore } from "../store/enrollmentsStore";
 import { useAccountContext } from "../account/AccountContext";
 
 export default function Dashboard() {
@@ -19,6 +20,7 @@ export default function Dashboard() {
   const [course, setCourse] = useState<Course>(emptyCourse);
   const { currentUser } = useAccountContext();
   const [showAllCourses, setShowAllCourses] = useState(false);
+  const setEnrollments = useEnrollmentsStore((state) => state.setEnrollments);
 
   useEffect(() => {
     const load = async () => {
@@ -31,9 +33,30 @@ export default function Dashboard() {
     load();
   }, [currentUser, showAllCourses, setCourses]);
 
+  useEffect(() => {
+    const load = async () => {
+      setEnrollments(currentUser ? await client.findMyEnrollments() : []);
+    };
+    load();
+  }, [currentUser, setEnrollments]);
+
   const onAddCourse = async () => {
     const newCourse = await client.createCourse(course);
     addCourse(newCourse);
+    setEnrollments(await client.findMyEnrollments());
+  };
+
+  const onEnroll = async (courseId: string) => {
+    if (!currentUser) return;
+    setEnrollments(await client.enrollIntoCourse(currentUser._id, courseId));
+  };
+
+  const onUnenroll = async (courseId: string) => {
+    if (!currentUser) return;
+    setEnrollments(await client.unenrollFromCourse(currentUser._id, courseId));
+    if (!showAllCourses) {
+      setCourses(await client.findMyCourses());
+    }
   };
 
   const onDeleteCourse = async (courseId: string) => {
@@ -137,6 +160,8 @@ export default function Dashboard() {
             course={c}
             onEdit={() => setCourse(c)}
             onDelete={() => onDeleteCourse(c._id)}
+            onEnroll={() => onEnroll(c._id)}
+            onUnenroll={() => onUnenroll(c._id)}
           />
         ))}
       </div>

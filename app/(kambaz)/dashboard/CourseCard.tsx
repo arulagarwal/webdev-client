@@ -8,15 +8,17 @@ export default function CourseCard({
   course,
   onEdit,
   onDelete,
+  onEnroll,
+  onUnenroll,
 }: {
   course: Course;
   onEdit: () => void;
   onDelete: () => void;
+  onEnroll: () => void;
+  onUnenroll: () => void;
 }) {
   const { currentUser } = useAccountContext();
   const enrollments = useEnrollmentsStore((state) => state.enrollments);
-  const enroll = useEnrollmentsStore((state) => state.enroll);
-  const unenroll = useEnrollmentsStore((state) => state.unenroll);
   const enrolled =
     !!currentUser &&
     enrollments.some(
@@ -78,7 +80,7 @@ export default function CourseCard({
                 className="ms-2 inline-flex items-center justify-center rounded bg-red-600 px-3 py-1.5 text-sm font-medium text-white"
                 onClick={(event) => {
                   event.preventDefault();
-                  unenroll(currentUser._id, course._id);
+                  onUnenroll();
                 }}
               >
                 Unenroll
@@ -90,7 +92,7 @@ export default function CourseCard({
                 className="ms-2 inline-flex items-center justify-center rounded bg-green-600 px-3 py-1.5 text-sm font-medium text-white"
                 onClick={(event) => {
                   event.preventDefault();
-                  enroll(currentUser._id, course._id);
+                  onEnroll();
                 }}
               >
                 Enroll

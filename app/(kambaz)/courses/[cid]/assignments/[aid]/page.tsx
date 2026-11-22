@@ -1,7 +1,8 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
+import * as client from "../../../client";
 import {
   emptyAssignment,
   useAssignmentsStore,
@@ -12,21 +13,33 @@ export default function AssignmentEditor() {
   const courseId = String(cid);
   const router = useRouter();
   const assignments = useAssignmentsStore((state) => state.assignments);
+  const setAssignments = useAssignmentsStore((state) => state.setAssignments);
   const addAssignment = useAssignmentsStore((state) => state.addAssignment);
   const updateAssignment = useAssignmentsStore((state) => state.updateAssignment);
   const isNew = aid === "new";
-  const [assignment, setAssignment] = useState<Assignment>(
-    () =>
-      assignments.find((a) => a._id === aid && a.course === courseId) ?? {
-        ...emptyAssignment,
-        course: courseId,
-      },
-  );
-  const save = () => {
+  const cached = assignments.find((a) => a._id === aid && a.course === courseId);
+  const [draft, setAssignment] = useState<Assignment | null>(null);
+  const assignment = draft ?? cached ?? { ...emptyAssignment, course: courseId };
+  useEffect(() => {
+    if (isNew || cached) return;
+    const load = async () => {
+      setAssignments(await client.findAssignmentsForCourse(courseId));
+    };
+    load();
+  }, [isNew, cached, courseId, setAssignments]);
+  const onAddAssignment = async () => {
+    const created = await client.createAssignmentForCourse(courseId, assignment);
+    addAssignment(created);
+  };
+  const onUpdateAssignment = async (assignment: Assignment) => {
+    const saved = await client.updateAssignment(assignment);
+    updateAssignment(saved);
+  };
+  const save = async () => {
     if (isNew) {
-      addAssignment({ ...assignment, course: courseId });
+      await onAddAssignment();
     } else {
-      updateAssignment(assignment);
+      await onUpdateAssignment(assignment);
     }
     router.push(`/courses/${courseId}/assignments`);
   };
