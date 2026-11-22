@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { FaAlignJustify } from "react-icons/fa6";
 import CourseNavigation from "./Navigation";
 import Breadcrumb from "./Breadcrumb";
+import * as client from "../client";
 import { useCoursesStore } from "../../store/coursesStore";
 import { useEnrollmentsStore } from "../../store/enrollmentsStore";
 import { useAccountContext } from "../../account/AccountContext";
@@ -17,7 +18,15 @@ export default function CoursesLayout({
   const { cid } = useParams();
   const courseId = typeof cid === "string" ? cid : "";
   const courses = useCoursesStore((state) => state.courses);
+  const setCourses = useCoursesStore((state) => state.setCourses);
   const course = courses.find((c) => c._id === courseId);
+  useEffect(() => {
+    if (course) return;
+    const load = async () => {
+      setCourses(await client.fetchAllCourses());
+    };
+    load();
+  }, [course, setCourses]);
   const [showCourseNav, setShowCourseNav] = useState(true);
   const { currentUser } = useAccountContext();
   const enrollments = useEnrollmentsStore((state) => state.enrollments);
