@@ -3,30 +3,28 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import * as client from "../client";
 import { useAccountContext } from "../AccountContext";
+
+type ServerError = { message: string; response?: { data: { message: string } } };
 
 export default function Signup() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { setCurrentUser } = useAccountContext();
   const router = useRouter();
 
-  const signup = () => {
+  const signup = async () => {
     if (!username || !password) return;
-    setCurrentUser({
-      _id: crypto.randomUUID(),
-      username,
-      password,
-      firstName: "",
-      lastName: "",
-      email: "",
-      role: "STUDENT",
-      loginId: "",
-      section: "",
-      lastActivity: "",
-      totalActivity: "",
-    });
-    router.push("/account/profile");
+    try {
+      const current = await client.signup({ username, password });
+      setCurrentUser(current);
+      router.push("/account/profile");
+    } catch (error) {
+      const { message, response } = error as ServerError;
+      setErrorMessage(response ? response.data.message : message);
+    }
   };
 
   return (
@@ -58,6 +56,11 @@ export default function Signup() {
       <Link href="/account/signin" id="wd-signin-link">
         Sign in
       </Link>
+      {errorMessage && (
+        <p id="wd-signup-error" className="mt-2 rounded bg-red-100 px-3 py-2 text-red-800">
+          {errorMessage}
+        </p>
+      )}
     </div>
   );
 }
