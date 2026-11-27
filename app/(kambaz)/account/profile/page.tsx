@@ -20,8 +20,8 @@ export default function Profile() {
 
   const updateProfile = async () => {
     if (!profile) return;
-    const user = await client.updateUser(profile);
-    setCurrentUser(user);
+    await client.updateUser(profile);
+    setCurrentUser(profile);
   };
 
   const signout = async () => {

@@ -31,8 +31,8 @@ export default function PeopleTable() {
   };
   const updateRole = async (user: User, role: string) => {
     const updated = { ...user, role };
-    const saved = await client.updateUser(updated);
-    setUsers(users.map((u) => (u._id === saved._id ? saved : u)));
+    await client.updateUser(updated);
+    setUsers(users.map((u) => (u._id === updated._id ? updated : u)));
   };
   const removePerson = async (userId: string) => {
     await client.deleteUser(userId);
