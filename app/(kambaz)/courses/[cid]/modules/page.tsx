@@ -31,8 +31,8 @@ export default function Modules() {
     deleteModule(moduleId);
   };
   const onUpdateModule = async (module: CourseModule) => {
-    const saved = await client.updateModule(module);
-    updateModule(saved);
+    await client.updateModule(module);
+    updateModule(module);
   };
   return (
     <div>
