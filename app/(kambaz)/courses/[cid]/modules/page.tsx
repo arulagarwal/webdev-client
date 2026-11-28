@@ -19,7 +19,7 @@ export default function Modules() {
       setModules(await client.findModulesForCourse(courseId));
     };
     load();
-  }, [courseId, setModules]);
+  }, [courseId]);
   const onAddModule = async () => {
     const created = await client.createModuleForCourse(courseId, {
       name: moduleName,

@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
-import { FaCheck, FaPencilAlt, FaUserCircle } from "react-icons/fa";
+import { FaUserCircle } from "react-icons/fa";
+import { FaCheck, FaPencilAlt } from "react-icons/fa";
 import { IoCloseSharp } from "react-icons/io5";
 import * as client from "../../../account/client";
 export default function PeopleDetails({
@@ -13,17 +14,13 @@ export default function PeopleDetails({
   const [user, setUser] = useState<any>({});
   const [name, setName] = useState("");
   const [editing, setEditing] = useState(false);
-  const [email, setEmail] = useState("");
-  const [role, setRole] = useState("STUDENT");
   const startEditing = () => {
     setName(`${user.firstName ?? ""} ${user.lastName ?? ""}`.trim());
-    setEmail(user.email ?? "");
-    setRole(user.role ?? "STUDENT");
     setEditing(true);
   };
   const saveUser = async () => {
     const [firstName, lastName] = name.split(" ");
-    const updatedUser = { ...user, firstName, lastName, email, role };
+    const updatedUser = { ...user, firstName, lastName };
     await client.updateUser(updatedUser);
     setUser(updatedUser);
     setEditing(false);
@@ -53,7 +50,7 @@ export default function PeopleDetails({
       <hr />
       <div className="flex items-center gap-2">
         {!editing && (
-          <div className="wd-name cursor-pointer text-lg text-red-700" onClick={startEditing}>
+          <div className="wd-name text-lg text-red-700">
             {user.firstName} {user.lastName}
           </div>
         )}
@@ -74,21 +71,26 @@ export default function PeopleDetails({
           <FaCheck onClick={() => saveUser()} className="wd-save ms-auto cursor-pointer text-lg text-green-600" />
         )}
       </div>
-      <b>Roles:</b>{" "}
-      {editing ? (
-        <select
-          className="wd-edit-role rounded border border-neutral-300 px-2 py-1"
-          value={role}
-          onChange={(e) => setRole(e.target.value)}
-        >
-          <option value="STUDENT">Students</option>
-          <option value="TA">Assistants</option>
-          <option value="FACULTY">Faculty</option>
-          <option value="ADMIN">Administrators</option>
-          <option value="USER">Users</option>
-        </select>
-      ) : (
-        <span className="wd-roles">{user.role}</span>
+      {!editing && (
+        <>
+          <b>Roles:</b> <span className="wd-roles">{user.role}</span>
+        </>
+      )}
+      {editing && (
+        <>
+          <b>Roles:</b>{" "}
+          <select
+            className="wd-edit-role rounded border border-neutral-300 px-2 py-1"
+            value={user.role ?? "STUDENT"}
+            onChange={(e) => setUser({ ...user, role: e.target.value })}
+          >
+            <option value="STUDENT">Students</option>
+            <option value="TA">Assistants</option>
+            <option value="FACULTY">Faculty</option>
+            <option value="ADMIN">Administrators</option>
+            <option value="USER">Users</option>
+          </select>
+        </>
       )}
       <br />
       <b>Email:</b>{" "}
@@ -96,8 +98,8 @@ export default function PeopleDetails({
         <input
           type="email"
           className="wd-edit-email rounded border border-neutral-300 px-2 py-1"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={user.email ?? ""}
+          onChange={(e) => setUser({ ...user, email: e.target.value })}
         />
       ) : (
         <span className="wd-email">{user.email}</span>

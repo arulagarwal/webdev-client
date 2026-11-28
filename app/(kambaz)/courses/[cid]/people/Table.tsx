@@ -41,7 +41,7 @@ export default function PeopleTable({
           {users.map((user) => (
             <tr key={user._id} className="odd:bg-neutral-50">
               <td
-                className={`wd-full-name p-2 text-nowrap${canOpenDetails ? " cursor-pointer" : ""}`}
+                className="wd-full-name p-2 text-nowrap"
                 onClick={() => {
                   if (!canOpenDetails) return;
                   setShowDetails(true);

@@ -33,44 +33,43 @@ export default function People() {
     await fetchUsers();
     setPerson(emptyUser);
   };
+  if (!canAddPeople) return <PeopleTable users={users} fetchUsers={fetchUsers} />;
   return (
     <div>
-      {canAddPeople && (
-        <div className="mb-3 flex flex-wrap items-center gap-2">
-          <input
-            id="wd-people-first-name"
-            placeholder="First name"
-            className="rounded border border-neutral-300 px-3 py-1.5 text-sm"
-            value={person.firstName}
-            onChange={(e) => setPerson({ ...person, firstName: e.target.value })}
-          />
-          <input
-            id="wd-people-last-name"
-            placeholder="Last name"
-            className="rounded border border-neutral-300 px-3 py-1.5 text-sm"
-            value={person.lastName}
-            onChange={(e) => setPerson({ ...person, lastName: e.target.value })}
-          />
-          <select
-            id="wd-people-role"
-            className="rounded border border-neutral-300 px-3 py-1.5 text-sm"
-            value={person.role}
-            onChange={(e) => setPerson({ ...person, role: e.target.value })}
-          >
-            <option value="STUDENT">Student</option>
-            <option value="TA">TA</option>
-            <option value="FACULTY">Faculty</option>
-          </select>
-          <button
-            type="button"
-            id="wd-people-add-click"
-            className="rounded bg-red-600 px-3 py-1.5 text-sm font-medium text-white"
-            onClick={addPerson}
-          >
-            + People
-          </button>
-        </div>
-      )}
+      <div className="mb-3 flex flex-wrap items-center gap-2">
+        <input
+          id="wd-people-first-name"
+          placeholder="First name"
+          className="rounded border border-neutral-300 px-3 py-1.5 text-sm"
+          value={person.firstName}
+          onChange={(e) => setPerson({ ...person, firstName: e.target.value })}
+        />
+        <input
+          id="wd-people-last-name"
+          placeholder="Last name"
+          className="rounded border border-neutral-300 px-3 py-1.5 text-sm"
+          value={person.lastName}
+          onChange={(e) => setPerson({ ...person, lastName: e.target.value })}
+        />
+        <select
+          id="wd-people-role"
+          className="rounded border border-neutral-300 px-3 py-1.5 text-sm"
+          value={person.role}
+          onChange={(e) => setPerson({ ...person, role: e.target.value })}
+        >
+          <option value="STUDENT">Student</option>
+          <option value="TA">TA</option>
+          <option value="FACULTY">Faculty</option>
+        </select>
+        <button
+          type="button"
+          id="wd-people-add-click"
+          className="rounded bg-red-600 px-3 py-1.5 text-sm font-medium text-white"
+          onClick={addPerson}
+        >
+          + People
+        </button>
+      </div>
       <PeopleTable users={users} fetchUsers={fetchUsers} />
     </div>
   );

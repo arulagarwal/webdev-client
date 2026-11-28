@@ -1,4 +1,5 @@
 import axios from "axios";
+import type { Course } from "../store/coursesStore";
 const axiosWithCredentials = axios.create({ withCredentials: true });
 const HTTP_SERVER = process.env.NEXT_PUBLIC_HTTP_SERVER;
 const COURSES_API = `${HTTP_SERVER}/api/courses`;
@@ -9,7 +10,7 @@ export const fetchAllCourses = async () => {
   return data;
 };
 export const findMyCourses = async () => {
-  const { data } = await axiosWithCredentials.get(`${USERS_API}/current/courses`);
+  const { data } = await axiosWithCredentials.get<Course[]>(`${USERS_API}/current/courses`);
   return data;
 };
 export const findCourseById = async (courseId: string) => {
@@ -25,7 +26,10 @@ export const deleteCourse = async (courseId: string) => {
   return data;
 };
 export const updateCourse = async (course: { _id: string }) => {
-  const { data } = await axios.put(`${COURSES_API}/${course._id}`, course);
+  const { data } = await axios.put(
+    `${COURSES_API}/${course._id}`,
+    course,
+  );
   return data;
 };
 export const findModulesForCourse = async (courseId: string) => {
