@@ -32,8 +32,8 @@ export default function AssignmentEditor() {
     addAssignment(created);
   };
   const onUpdateAssignment = async (assignment: Assignment) => {
-    const saved = await client.updateAssignment(assignment);
-    updateAssignment(saved);
+    await client.updateAssignment(assignment);
+    updateAssignment(assignment);
   };
   const save = async () => {
     if (isNew) {
