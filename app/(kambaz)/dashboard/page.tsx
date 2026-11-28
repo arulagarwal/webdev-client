@@ -65,8 +65,8 @@ export default function Dashboard() {
   };
 
   const onUpdateCourse = async () => {
-    const saved = await client.updateCourse(course);
-    updateCourse(saved);
+    await client.updateCourse(course);
+    updateCourse(course);
   };
 
   return (

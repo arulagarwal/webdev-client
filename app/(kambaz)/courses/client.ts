@@ -12,11 +12,12 @@ export const findMyCourses = async () => {
   const { data } = await axiosWithCredentials.get(`${USERS_API}/current/courses`);
   return data;
 };
+export const findCourseById = async (courseId: string) => {
+  const { data } = await axios.get(`${COURSES_API}/${courseId}`);
+  return data;
+};
 export const createCourse = async (course: unknown) => {
-  const { data } = await axiosWithCredentials.post(
-    `${USERS_API}/current/courses`,
-    course,
-  );
+  const { data } = await axiosWithCredentials.post(COURSES_API, course);
   return data;
 };
 export const deleteCourse = async (courseId: string) => {
