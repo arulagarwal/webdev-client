@@ -35,13 +35,15 @@ export default function CoursesLayout({
   const enrollments = useEnrollmentsStore((state) => state.enrollments);
   const setEnrollments = useEnrollmentsStore((state) => state.setEnrollments);
   const router = useRouter();
+  const isAdmin = currentUser?.role === "ADMIN";
   const allowed =
     !currentUser ||
+    isAdmin ||
     enrollments.some(
       (e) => e.user === currentUser._id && e.course === courseId,
     );
   useEffect(() => {
-    if (!currentUser) return;
+    if (!currentUser || isAdmin) return;
     const check = async () => {
       const mine: Enrollment[] = await client.findMyEnrollments();
       setEnrollments(mine);
@@ -50,7 +52,7 @@ export default function CoursesLayout({
       }
     };
     check();
-  }, [currentUser, courseId, setEnrollments, router]);
+  }, [currentUser, isAdmin, courseId, setEnrollments, router]);
   if (!allowed) return null;
 
   return (

@@ -46,17 +46,25 @@ export default function Dashboard() {
     setEnrollments(await client.findMyEnrollments());
   };
 
+  const refetchCourses = async () => {
+    setCourses(
+      showAllCourses
+        ? await client.fetchAllCourses()
+        : await client.findMyCourses(),
+    );
+    setEnrollments(await client.findMyEnrollments());
+  };
+
   const onEnroll = async (courseId: string) => {
     if (!currentUser) return;
-    setEnrollments(await client.enrollIntoCourse(currentUser._id, courseId));
+    await client.enrollIntoCourse(currentUser._id, courseId);
+    await refetchCourses();
   };
 
   const onUnenroll = async (courseId: string) => {
     if (!currentUser) return;
-    setEnrollments(await client.unenrollFromCourse(currentUser._id, courseId));
-    if (!showAllCourses) {
-      setCourses(await client.findMyCourses());
-    }
+    await client.unenrollFromCourse(currentUser._id, courseId);
+    await refetchCourses();
   };
 
   const onDeleteCourse = async (courseId: string) => {
